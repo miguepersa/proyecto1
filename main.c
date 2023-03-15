@@ -4,6 +4,10 @@
 #include <unistd.h>
 #include <getopt.h>
 
+#include "Ruta.h"
+#include "Autobus.h"
+#include "Aux.h"
+
 extern char* optarg;
 
 int main(int argc, char* const* argv)
@@ -13,7 +17,7 @@ int main(int argc, char* const* argv)
     char *a_carg = NULL;
     float tiempo = 0.25;
 
-    
+    /* Parsing de argumentos del programa */
     while ((opt = getopt(argc, argv, "s:c:t:")) != -1)
     {
         switch (opt)
@@ -36,6 +40,7 @@ int main(int argc, char* const* argv)
         }
 
     }
+    
     
     if (!a_serv)
     {

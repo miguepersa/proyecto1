@@ -1,4 +1,4 @@
-#include "Aux.h"
+#include "Funciones.h"
 
 
 int leer_c_carga(char* nombre_archivo, Ruta lista_paradas[])
@@ -26,12 +26,11 @@ int leer_c_carga(char* nombre_archivo, Ruta lista_paradas[])
                     &lista_paradas[num_paradas].usuarios[7]) != 0) {
         num_paradas++;
         if (num_paradas >= MAX_PARADAS) {
-        printf("Demasiadas paradas en el archivo\n");
-        break;
+            printf("Demasiadas paradas en el archivo\n");
+            break;
         }
     }
 
     fclose(archivo);
     return num_paradas;
 }
-

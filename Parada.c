@@ -1,21 +1,19 @@
-#include "Ruta.h"
+#include "Parada.h"
 
-Ruta *ruta_init()
+Parada *parada_init()
 {
-    Ruta *r = (Ruta*) malloc(sizeof(Ruta));
+    Parada *r = (Parada*) malloc(sizeof(Parada));
     if (!r)
     {
         perror(strerror(errno));
         return NULL;
     }
 
-    r->nbuses = 0;
-    r->tiempo_ruta = 0;
-    r->pasajeros_esperando = 0;
+    r->tiempo_ruta = 0.0;
     return r;
 }
 
-void ruta_destroy(Ruta *r)
+void parada_destroy(Parada *r)
 {
     int i;
     for (i = 0; i < r->nbuses; i++)
