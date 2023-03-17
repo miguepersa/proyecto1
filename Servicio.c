@@ -1,4 +1,4 @@
-#include Servicio.h
+#include "Servicio.h"
 
 Nodo *nodo_init()
 {
@@ -34,6 +34,8 @@ Servicio *servicio_init()
     }
     s->cabeza = NULL;
     s->cola = NULL;
+
+    return s;
 }
 
 void servicio_destroy(Servicio*s)
@@ -50,9 +52,9 @@ void servicio_destroy(Servicio*s)
 }
 
 void servicio_add(Servicio* s, Nodo* n){
-    Nodo cola = s-> cola;
+    Nodo *cola = s->cola;
     cola->siguiente = n;
-    s-> cola = n;
+    s->cola = n;
 }
 
 void servicio_delete(Servicio* s, Nodo* n){

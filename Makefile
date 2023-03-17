@@ -1,4 +1,4 @@
-OBJ = main.o Parada.o
+OBJ = main.o Funciones.o Servicio.o
 CFLAGS = -ansi -Wall -g
 
 simutransusb: $(OBJ)
@@ -7,8 +7,12 @@ simutransusb: $(OBJ)
 main.o: main.c
 	gcc -c $(CFLAGS) $< -o $@
 
-Parada.o: Parada.c
+Funciones.o: Funciones.c
 	gcc -c $(CFLAGS) $< -o $@
+
+Servicio.o: Servicio.c
+	gcc -c $(CFLAGS) $< -o $@	
+
 
 clean:
 	rm -rf ./*.o simutransusb

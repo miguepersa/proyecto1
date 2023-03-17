@@ -4,21 +4,21 @@
 #include <unistd.h>
 #include <getopt.h>
 
-#include "Ruta.h"
-#include "Autobus.h"
-#include "Aux.h"
+/*#include "Ruta.h"
+#include "Autobus.h"*/
+#include "Funciones.h"
 
 extern char* optarg;
 
 int main(int argc, char* const* argv)
 {
-    int opt;
+   /* int opt;
     char *a_serv = NULL;
     char *a_carg = NULL;
-    float tiempo = 0.25;
+    float tiempo = 0.25;*/
 
     /* Parsing de argumentos del programa */
-    while ((opt = getopt(argc, argv, "s:c:t:")) != -1)
+    /*while ((opt = getopt(argc, argv, "s:c:t:")) != -1)
     {
         switch (opt)
         {
@@ -46,7 +46,9 @@ int main(int argc, char* const* argv)
     {
         perror("Debe especificar un archivo de caracterizacion.\nUso: ./simutransusb -s <archivo> [-c <archivo>] [-t <num>]");
         exit(1);
-    }
+    }*/
+    Servicio *s = servicio_init();
+    leer_caracterizacion_de_servicio("servicio2007.txt", s);
 
     return 0;
 }
