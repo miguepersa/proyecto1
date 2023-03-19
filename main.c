@@ -4,13 +4,13 @@
 #include <unistd.h>
 #include <getopt.h>
 
-/*#include "Ruta.h"
+/*#include "Parada.h"
 #include "Autobus.h"*/
 #include "Funciones.h"
 
 extern char* optarg;
 
-int main(int argc, char* const* argv)
+int main()
 {
    /* int opt;
     char *a_serv = NULL;
@@ -41,14 +41,15 @@ int main(int argc, char* const* argv)
 
     }
     
-    
     if (!a_serv)
     {
         perror("Debe especificar un archivo de caracterizacion.\nUso: ./simutransusb -s <archivo> [-c <archivo>] [-t <num>]");
         exit(1);
     }*/
-    Servicio *s = servicio_init();
-    leer_caracterizacion_de_servicio("servicio2007.txt", s);
+
+    Lista_Servicio* ls = lista_servicio_init();
+    leer_caracterizacion_de_servicio("servicio2007.txt",ls);
+    lista_servicio_destroy(ls);
 
     return 0;
 }

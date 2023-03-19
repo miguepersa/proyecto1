@@ -1,7 +1,7 @@
 #include "Funciones.h"
 
 
-/*int leer_caracterizacion_carga(char* nombre_archivo, Ruta lista_paradas[])
+/*int leer_caracterizacion_carga(char* nombre_archivo, Parada lista_paradas[])
 {
     FILE* archivo = fopen(nombre_archivo, "r");
     if (archivo == NULL) {
@@ -35,7 +35,7 @@
     return num_paradas;
 }*/
 
-void leer_caracterizacion_de_servicio(char* nombre_archivo, Servicio* s){
+void leer_caracterizacion_de_servicio(char* nombre_archivo, Lista_Servicio* ls){
 
     FILE* archivo = fopen(nombre_archivo, "r");
     if (archivo == NULL) {
@@ -44,57 +44,68 @@ void leer_caracterizacion_de_servicio(char* nombre_archivo, Servicio* s){
     }
 
     char linea[320];
+    
     while (fgets(linea,320,archivo)!=0) {
+        Servicio* s = servicio_init();
         char *linsinespacio = strtok(linea, " ");
-        int i ;
-        for(i= 0;i<3;i++){
-            s->codigo[i] = linsinespacio[i]  ;
+
+        int i;
+        for(i=0;i<3;i++){
+            s->codigo[i] = linsinespacio[i] ;
         }
+        
+        linsinespacio = strtok(0," ");
 
-        char h1 = ' ';
-        char h2 = ' ';
-        int j = 3;
-        while(j < 320){
-            Nodo *n = nodo_init();
-            if(linsinespacio[j] != ':'){
-                if(h1 != ' '){
-                    h2 = linsinespacio[j];
+        while(linsinespacio != 0){
+            char *actual = linsinespacio;
+            char h1 = ' ';
+            char h2 = ' ';
+            int j = 0;
+        
+            while (actual[j] != '\0'){
+
+                if(actual[j] != ':'){
+                    if(h1 != ' '){
+                        h2 = actual[j];
+                    }else{
+                        h1 = actual[j];
+                    }
+                    j++;
                 }else{
-                    h1 = linsinespacio[j];
+                    int hora = 0;
+                    if(h2 != ' '){
+                        int hora1 = (h1-'0')*10;
+                        int hora2 = (h2-'0');
+                        hora = hora1 + hora2;
+
+                    }else{
+                        hora = (h1-'0');
+                    }
+                    h1 = ' ';
+                    h2 = ' ';
+                    j++;
+
+                    int minuto = 0;
+                    int minuto1 = (actual[j] -'0')*10;
+                    int minuto2 = (actual[j+1] -'0');
+                    minuto = minuto1 + minuto2;
+
+                    j = j+3;
+
+                    char capacidad[2];
+                    capacidad[0] = actual[j];
+                    capacidad[1] = actual[j+1];
+                    fflush(stdout);
+                    j = j+3;
+
+                servicio_add(s,hora,minuto,atoi(capacidad));
                 }
-            }else{
-                if(h2 != ' '){
-                    int hora1 = (int)(h1)*10;
-                    int hora2 = (int)(h2);
-                    hora1 = hora1 + hora2;
-                    n->hora = hora1;
-
-                }else{
-                    n->hora = (int)(h1);
-                }
-                h1 = ' ';
-                h2 = ' ';
-
-                char minuto[2];
-                j = j + 1;
-                minuto[0] = linsinespacio[j];
-                minuto[1] = linsinespacio[j+1];
-                n->minuto = atoi(minuto);
-
-                j = j+3;
-
-                char capacidad[2];
-                capacidad[0] = linsinespacio[j];
-                capacidad[1] = linsinespacio[j+1];
-                n->capacidad = atoi(capacidad);
-
-                j = j+3;
-
-               servicio_add(s,n);
             }
+            linsinespacio = strtok(0," ");
         }
-
+    lista_servicio_add(ls,s);
     }
 
     fclose(archivo);
+    lista_servicio_print(ls);
 }

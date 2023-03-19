@@ -10,6 +10,6 @@
 
 
 /*int leer_caracterizacion_carga(char*, Parada[]);*/
-void leer_caracterizacion_de_servicio(char*, Servicio*);
+void leer_caracterizacion_de_servicio(char*, Lista_Servicio*);
 
 #endif

@@ -34,6 +34,7 @@ Servicio *servicio_init()
     }
     s->cabeza = NULL;
     s->cola = NULL;
+    s->siguiente = NULL;
 
     return s;
 }
@@ -51,10 +52,22 @@ void servicio_destroy(Servicio*s)
     nodo_destroy(nodoactual);
 }
 
-void servicio_add(Servicio* s, Nodo* n){
-    Nodo *cola = s->cola;
-    cola->siguiente = n;
-    s->cola = n;
+void servicio_add(Servicio* s, int hora,int minuto ,int capacidad){
+
+    Nodo *n = nodo_init();
+    n->hora = hora;
+    n->minuto = minuto;
+    n->capacidad = capacidad;
+    /*printf("Horai: %d, Minutoi: %d, Capacidadi: %d\n", n->hora, n->minuto,n->capacidad);*/
+
+    if(s->cabeza == NULL){
+        s->cabeza = n;
+        s->cola = n;
+    }else{
+        Nodo *cola = s->cola;
+        cola->siguiente = n;
+        s->cola = n;
+    }
 }
 
 void servicio_delete(Servicio* s, Nodo* n){
@@ -85,9 +98,80 @@ void servicio_delete(Servicio* s, Nodo* n){
             nodoanterior->siguiente = nodoactual->siguiente;
             nodo_destroy(nodoactual);
         }else{
-           printf("No existe el nodo");
+           printf("No existe el nodo\n");
         }
 
     }
 
-};
+}
+
+Lista_Servicio *lista_servicio_init(){
+    Lista_Servicio *ls = (Lista_Servicio*) malloc(sizeof(Lista_Servicio));
+    if (!ls)
+    {
+        perror(strerror(errno));
+        return NULL;
+    }
+    ls->cabeza = NULL;
+    ls->cola = NULL;
+
+    return ls;   
+
+}
+
+
+void lista_servicio_destroy(Lista_Servicio* ls){
+    Servicio *servicioactual = ls->cabeza;
+
+    while(servicioactual->siguiente != NULL){
+        Servicio *servicioviejo = servicioactual;
+        servicioactual = servicioactual->siguiente;
+        servicio_destroy(servicioviejo);
+    }
+
+    servicio_destroy(servicioactual);
+
+}
+
+void lista_servicio_add(Lista_Servicio* ls, Servicio* s){
+
+    if(ls->cabeza == NULL){
+        ls->cabeza = s;
+        ls->cola = s;
+    }else{
+        Servicio *cola = ls->cola;
+        cola->siguiente = s;
+        ls->cola = s;
+    }
+    ls->cantidad = ls->cantidad + 1;
+
+}
+
+void lista_servicio_print(Lista_Servicio* ls){
+
+    printf("Cantidad de servicios = %d\n", ls->cantidad);
+    Servicio* servicioactual = ls->cabeza;
+    while(servicioactual->siguiente != NULL){
+        printf("----------Servicio de %s:----------\n",servicioactual->codigo);
+        Nodo* nodoactual = servicioactual->cabeza;
+        while(nodoactual->siguiente!= NULL){
+            printf("Horario: %d:%d | Capacidad: %d\n", nodoactual->hora,nodoactual->minuto,nodoactual->capacidad);
+            nodoactual = nodoactual->siguiente;
+        }
+        printf("Horario: %d:%d | Capacidad: %d\n", servicioactual->cola->hora,servicioactual->cola->minuto,servicioactual->cola->capacidad);
+        servicioactual = servicioactual->siguiente;
+        printf("\n");
+    }
+
+    printf("----------Servicio de: %s----------\n",ls->cola->codigo);
+
+    Nodo* nodofinal = ls->cola->cabeza;
+    while(nodofinal->siguiente!=NULL){
+        printf("Horario: %d:%d | Capacidad: %d\n", nodofinal->hora,nodofinal->minuto,nodofinal->capacidad);
+        nodofinal = nodofinal->siguiente;       
+    }
+    printf("Horario: %d:%d | Capacidad: %d\n", ls->cola->cola->hora,ls->cola->cola->minuto,ls->cola->cola->capacidad);
+    printf("------------------------------------\n");
+
+}
+
