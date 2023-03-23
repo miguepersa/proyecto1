@@ -15,13 +15,14 @@ typedef struct parada{
     Autobus *autobuses[MAX_BUSES];
     char codigo[20];
     char nombre[100];
-    char hora_llegada[10];
-    float tiempo_ruta;
+    int duracion_h;
+    int duracion_m;
     int usuarios[8];
     int nbuses;
 }Parada;
 
-Parada *ruta_init();
-void ruta_destroy(Parada*);
+Parada *parada_init();
+void parada_destroy(Parada*);
+void parada_impresion(Parada *, int);
 
 #endif

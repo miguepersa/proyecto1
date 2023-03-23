@@ -1,7 +1,14 @@
 #include "Funciones.h"
 
-
-/*int leer_caracterizacion_carga(char* nombre_archivo, Parada lista_paradas[])
+void quitar_espacios(char* s) {
+    char* d = s;
+    do {
+        while (*d == ' ') {
+            ++d;
+        }
+    } while (*s++ = *d++);
+}
+int leer_caracterizacion_carga(char* nombre_archivo, Parada lista_paradas[])
 {
     FILE* archivo = fopen(nombre_archivo, "r");
     if (archivo == NULL) {
@@ -10,30 +17,98 @@
     }
 
     int num_paradas = 0;
-    while (fscanf(archivo, "%[^,],%[^,],%[^,],%f,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
-                    lista_paradas[num_paradas].codigo,
-                    lista_paradas[num_paradas].nombre,
-                    lista_paradas[num_paradas].hora_llegada,
-                    &lista_paradas[num_paradas].duracion_h,
-                    &lista_paradas[num_paradas].duracion_m,
-                    &lista_paradas[num_paradas].usuarios[0],
-                    &lista_paradas[num_paradas].usuarios[1],
-                    &lista_paradas[num_paradas].usuarios[2],
-                    &lista_paradas[num_paradas].usuarios[3],
-                    &lista_paradas[num_paradas].usuarios[4],
-                    &lista_paradas[num_paradas].usuarios[5],
-                    &lista_paradas[num_paradas].usuarios[6],
-                    &lista_paradas[num_paradas].usuarios[7]) != 0) {
+    char linea[100];
+    int index = 0;
+    int j;
+
+    while (fgets(linea,100,archivo)!=0) {
+
+        if(index==0){
+            index++;
+            continue;
+        }
+        quitar_espacios(linea);
+        Parada *p = parada_init();
+        char *lin_sin_coma = strtok(linea, ",");
         num_paradas++;
+        index = 0;
+        while(lin_sin_coma != 0){
+
+            switch(index){
+                case 0:
+                    int i;
+                    for(i=0;i<3;i++){
+
+                        p->codigo[i] = lin_sin_coma[i] ;
+
+                    }
+                    break;
+
+                case 1:
+                    for(i=0; i<strlen(lin_sin_coma);i++){
+
+                        p->nombre[i] = lin_sin_coma[i];
+
+                    }
+                    break;
+
+                case 2:
+                    int hora = (lin_sin_coma[0] - '0');
+                    char min[2] = {lin_sin_coma[2],lin_sin_coma[3]};
+                    int minuto = atoi(min);
+                    p->duracion_h = hora;
+                    p->duracion_m = minuto;
+                    break;
+
+                case 3:
+                    p->usuarios[0] = atoi(lin_sin_coma);
+                    break;
+                
+                case 4:
+                    p->usuarios[1] = atoi(lin_sin_coma);
+                    break;
+
+                case 5:
+                    p->usuarios[2] = atoi(lin_sin_coma);
+                    break;
+
+                case 6:
+                    p->usuarios[3] = atoi(lin_sin_coma);
+                    break;
+
+                case 7:
+                    p->usuarios[4] = atoi(lin_sin_coma);
+                    break;
+
+                case 8:
+                    p->usuarios[5] = atoi(lin_sin_coma);
+                    break;
+
+                case 9:
+                    p->usuarios[6] = atoi(lin_sin_coma);
+                    break;
+
+                case 10:
+                    p->usuarios[7] = atoi(lin_sin_coma);
+                    break;
+
+            }
+            index++;
+            lin_sin_coma = strtok(0,",");
+        }
+        lista_paradas[j] = *p;
+        j++;
+    
         if (num_paradas >= MAX_PARADAS) {
-            printf("Demasiadas paradas en el archivo\n");
+         printf("Demasiadas paradas en el archivo\n");
             break;
         }
     }
 
+
     fclose(archivo);
     return num_paradas;
-}*/
+}
 
 void leer_caracterizacion_de_servicio(char* nombre_archivo, Lista_Servicio* ls){
 
@@ -47,17 +122,17 @@ void leer_caracterizacion_de_servicio(char* nombre_archivo, Lista_Servicio* ls){
     
     while (fgets(linea,320,archivo)!=0) {
         Servicio* s = servicio_init();
-        char *linsinespacio = strtok(linea, " ");
+        char *lin_sin_espacio = strtok(linea, " ");
 
         int i;
         for(i=0;i<3;i++){
-            s->codigo[i] = linsinespacio[i] ;
+            s->codigo[i] = lin_sin_espacio[i] ;
         }
         
-        linsinespacio = strtok(0," ");
+        lin_sin_espacio = strtok(0," ");
 
-        while(linsinespacio != 0){
-            char *actual = linsinespacio;
+        while(lin_sin_espacio != 0){
+            char *actual = lin_sin_espacio;
             char h1 = ' ';
             char h2 = ' ';
             int j = 0;
@@ -101,7 +176,7 @@ void leer_caracterizacion_de_servicio(char* nombre_archivo, Lista_Servicio* ls){
                 servicio_add(s,hora,minuto,atoi(capacidad));
                 }
             }
-            linsinespacio = strtok(0," ");
+            lin_sin_espacio = strtok(0," ");
         }
     lista_servicio_add(ls,s);
     }

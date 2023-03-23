@@ -47,9 +47,28 @@ int main()
         exit(1);
     }*/
 
-    Lista_Servicio* ls = lista_servicio_init();
+    /*Lista_Servicio* ls = lista_servicio_init();
     leer_caracterizacion_de_servicio("servicio2007.txt",ls);
-    lista_servicio_destroy(ls);
+    lista_servicio_destroy(ls);*/
+
+    /*Aqui debemos colocar la cantidad de paradas que tomamos de los archivos de entrada*/
+    int i;
+    int fd_array[4][2];
+    for(i=0; i<4;i++){
+        int id = fork();
+
+        if(id != 0){
+            pipe(fd_array[i]);
+        
+        }else{
+            break;   
+        }
+
+    }
+
+    /*Parada arreglo_paradas[MAX_PARADAS];
+    int numero_paradas = leer_caracterizacion_carga("carga.csv", arreglo_paradas);
+    parada_impresion(arreglo_paradas, numero_paradas);*/
 
     return 0;
 }
