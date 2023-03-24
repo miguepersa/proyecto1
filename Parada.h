@@ -9,8 +9,8 @@
 #include "Autobus.h"
 #include "Settings.h"
 
-
-typedef struct parada{
+typedef struct parada
+{
 
     Autobus *autobuses[MAX_BUSES];
     char codigo[20];
@@ -24,5 +24,6 @@ typedef struct parada{
 Parada *parada_init();
 void parada_destroy(Parada*);
 void parada_impresion(Parada *, int);
+void parada_crear_buses(Parada*, pthread_t[]);
 
 #endif

@@ -24,10 +24,12 @@ void parada_destroy(Parada *p)
     
 }
 
-void parada_impresion(Parada *p, int numero_p){
+void parada_impresion(Parada *p, int numero_p)
+{
     int i;
 
-    while(i<numero_p){
+    while(i<numero_p)
+    {
         printf("Informacion de parada %s:\n",p[i].codigo);
         printf("--------------------------\n");
 
@@ -37,4 +39,29 @@ void parada_impresion(Parada *p, int numero_p){
         i++;
     }
 
+}
+
+
+void parada_crear_buses(Parada* p, pthread_t threads[])
+{
+    int num_buses = p->nbuses;
+    if(pthread_mutex_init(&lock, NULL) != 0)
+    {
+        perror("Error en mutex lock\n");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < num_buses; i++)
+    {
+        int th = pthread_create(&threads[i], NULL, autobus_runner, p->autobuses[i]);
+        if (th != 0) 
+        {
+            perror("Error al crear hilo de autobús");
+            exit(EXIT_FAILURE);
+        }
+    }
+    // Esperar a que los hilos terminen (nunca debería ocurrir)
+    for (int i = 0; i < num_buses; i++)
+    {
+        pthread_join(threads[i], NULL);
+    }
 }

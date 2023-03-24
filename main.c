@@ -54,11 +54,23 @@ int main()
     /*Aqui debemos colocar la cantidad de paradas que tomamos de los archivos de entrada*/
     int i;
     int fd_array[4][2];
+    int pid;
     for(i=0; i<4;i++){
-        int id = fork();
+        pid = fork();
+        if (pid == -1)
+        {
+            perror("Error en la creacion del hijo\n");
+            exit(1);
+        }
 
-        if(id != 0){
-            pipe(fd_array[i]);
+        if(pid != 0){
+            if (pipe(fd_array[i]) != 0)
+            {
+                perror("Error en la creacion del pipe\n");
+                exit(1);
+            }
+
+
         
         }else{
             break;   
