@@ -11,6 +11,10 @@ Parada *parada_init()
         return NULL;
     }
 
+    p->duracion_h = 0;
+    p->duracion_m = 0;
+    p->nbuses = 0;
+    
     return p;
 }
 

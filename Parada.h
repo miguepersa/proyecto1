@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "Autobus.h"
+#include "Settings.h"
 
 typedef struct parada
 {

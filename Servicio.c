@@ -175,8 +175,8 @@ void lista_servicio_print(Lista_Servicio* ls){
 
 }
 
-int lista_servicio_buscar_nbuses(lista_servicio* ls, char codigo[]){
-    servicio_actual = ls->cabeza;
+int lista_servicio_buscar_nbuses(Lista_Servicio* ls, char codigo[]){
+    Servicio* servicio_actual = ls->cabeza;
 
     while(servicio_actual->siguiente!=NULL){
 
@@ -194,8 +194,8 @@ int lista_servicio_buscar_nbuses(lista_servicio* ls, char codigo[]){
     return -1;
 }
 
-Servicio* lista_servicio_buscar_nbuses(lista_servicio* ls, char codigo[]){
-    servicio_actual = ls->cabeza;
+Servicio* lista_servicio_buscar_servicio(Lista_Servicio* ls, char codigo[]){
+    Servicio* servicio_actual = ls->cabeza;
 
     while(servicio_actual->siguiente!=NULL){
 

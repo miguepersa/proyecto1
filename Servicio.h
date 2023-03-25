@@ -41,8 +41,8 @@ Lista_Servicio *lista_servicio_init();
 void lista_servicio_destroy(Lista_Servicio* ls);
 void lista_servicio_add(Lista_Servicio* ls, Servicio* s);
 void lista_servicio_print(Lista_Servicio* ls);
-int lista_servicio_buscar_nbuses(lista_servicio* ls, char codigo[]);
-Servicio* lista_servicio_buscar_servicio(lista_servicio* ls, char codigo[]);
+int lista_servicio_buscar_nbuses(Lista_Servicio* ls, char codigo[]);
+Servicio* lista_servicio_buscar_servicio(Lista_Servicio* ls, char codigo[]);
 
 
 #endif

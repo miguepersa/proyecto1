@@ -10,7 +10,7 @@ void quitar_espacios(char* s) {
         }
     } while (*s++ = *d++);
 }
-int leer_caracterizacion_carga(char* nombre_archivo, Parada lista_paradas[])
+int leer_caracterizacion_carga(char* nombre_archivo, Parada* lista_paradas)
 {
     FILE* archivo = fopen(nombre_archivo, "r");
     if (archivo == NULL) {
@@ -21,7 +21,7 @@ int leer_caracterizacion_carga(char* nombre_archivo, Parada lista_paradas[])
     int num_paradas = 0;
     char linea[100];
     int index = 0;
-    int j;
+    int j = 0;
 
     while (fgets(linea,100,archivo)!=0) {
 
@@ -184,7 +184,6 @@ void leer_caracterizacion_de_servicio(char* nombre_archivo, Lista_Servicio* ls){
     }
 
     fclose(archivo);
-    lista_servicio_print(ls);
 }
 
 float buscar_hora_inicio(Lista_Servicio* ls){
@@ -192,11 +191,11 @@ float buscar_hora_inicio(Lista_Servicio* ls){
     int hora_minima = 12;
     int minuto_minimo = 59;
     float horario_minimo = -1.0;
-    Servicio servicio_actual = ls->cabeza;
+    Servicio* servicio_actual = ls->cabeza;
 
     while(servicio_actual->siguiente != NULL){
 
-        Nodo horario_actual = servicio_actual->cabeza;
+        Nodo* horario_actual = servicio_actual->cabeza;
 
         if(horario_actual->hora < hora_minima){
 
@@ -210,12 +209,12 @@ float buscar_hora_inicio(Lista_Servicio* ls){
         }
     }
 
-    if(ls->cola->hora < hora_minima){
-        hora_minima = ls->cola->hora;
-        minuto_minimo = ls->cola->minuto;
+    if(ls->cola->cabeza->hora < hora_minima){
+        hora_minima = ls->cola->cabeza->hora;
+        minuto_minimo = ls->cola->cabeza->minuto;
 
-    }else if(ls->cola->hora == hora_minima){
-        minuto_minimo = ls->cola->hora->minuto;
+    }else if(ls->cola->cabeza->hora == hora_minima){
+        minuto_minimo = ls->cola->cabeza->minuto;
 
     }
 

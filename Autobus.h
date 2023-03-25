@@ -8,7 +8,6 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#include "Settings.h"
 
 typedef struct bus{
     

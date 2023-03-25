@@ -7,16 +7,16 @@ simutransusb: $(OBJ)
 main.o: main.c
 	gcc -c $(CFLAGS) $< -o $@
 
-Funciones.o: Funciones.c
+Funciones.o: Funciones.c Servicio.h Parada.h
 	gcc -c $(CFLAGS) $< -o $@
 
 Servicio.o: Servicio.c
 	gcc -c $(CFLAGS) $< -o $@
 
-Parada.o: Parada.c 
+Parada.o: Parada.c Settings.h Autobus.h
 	gcc -c $(CFLAGS) $< -o $@
 
-Autobus.o: Autobus.c
+Autobus.o: Autobus.c 
 	gcc -c $(CFLAGS) $< -o $@
 
 

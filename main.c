@@ -13,7 +13,7 @@ extern char* optarg;
 float hora_inicial;
 
 int tic_toc(){
-    int ms = 0, 
+    int ms = 0;
     int frame = 10;
     clock_t antes = clock();
 
@@ -70,15 +70,14 @@ int main()
     Lista_Servicio* ls = lista_servicio_init();
     leer_caracterizacion_de_servicio("servicio2007.txt",ls);
 
-    Parada arreglo_paradas[MAX_PARADAS];
+    Parada * arreglo_paradas = malloc((MAX_PARADAS+1) * sizeof(Parada));
     int numero_paradas = leer_caracterizacion_carga("carga.csv", arreglo_paradas);
-    parada_impresion(arreglo_paradas, numero_paradas);
-
+    
     int j;
     for(j = 0; j< numero_paradas; j++){
 
-        char* codigo_actual = arreglo_paradas[j]->codigo;
-        arreglo_paradas[j]->nbuses = lista_servicio_buscar_nbuses(ls, codigo_actual);
+        char* codigo_actual = arreglo_paradas[j].codigo;
+        arreglo_paradas[j].nbuses = lista_servicio_buscar_nbuses(ls, codigo_actual);
           
     }
 
@@ -105,16 +104,16 @@ int main()
 
         if(pid != 0){
 
-            /*
+            
             close(fd_array[i][1]);
             read(fd_array[i][0],&y,sizeof(int));
-            close(fd_array[i][0]);*/
+            close(fd_array[i][0]);
         
         }else{
             indice_parada = i;
-            /*close(fd_array[i][0]);
+            close(fd_array[i][0]);
             write(fd_array[i][1], &i ,sizeof(int));
-            close(fd_array[i][1]);*/
+            close(fd_array[i][1]);
             break;   
         }
 
@@ -122,7 +121,7 @@ int main()
 
     if(pid == 0){
 
-        Servicio* s = lista_servicio_buscar_servicio(ls,arreglo_paradas[indice_parada]->codigo);
+        Servicio* s = lista_servicio_buscar_servicio(ls,arreglo_paradas[indice_parada].codigo);
 
         float hora_actual = hora_inicial;
         int dt = 0;
@@ -131,16 +130,17 @@ int main()
 
         pthread_t* bus_actual;
    
-        while(true){
+        while(0){
             if(hora_actual==siguiente_autobus_h){
                 Autobus* bus = autobus_init();
                 bus->capacidad = capacidad_bus;
-                bus_actual = parada_crear_buses(arreglo_paradas[indice_parada], bus);
+                bus_actual = parada_crear_buses(&arreglo_paradas[indice_parada], bus);
             }
 
             dt =  dt + tic_toc();
             if(dt >= 250){
                 hora_actual = hora_actual + 0.01;
+                dt = 0;
             }
         }
 
