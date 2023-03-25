@@ -58,7 +58,6 @@ void servicio_add(Servicio* s, int hora,int minuto ,int capacidad){
     n->hora = hora;
     n->minuto = minuto;
     n->capacidad = capacidad;
-    /*printf("Horai: %d, Minutoi: %d, Capacidadi: %d\n", n->hora, n->minuto,n->capacidad);*/
 
     if(s->cabeza == NULL){
         s->cabeza = n;
@@ -68,6 +67,7 @@ void servicio_add(Servicio* s, int hora,int minuto ,int capacidad){
         cola->siguiente = n;
         s->cola = n;
     }
+    s->nbuses = s->nbuses + 1;
 }
 
 void servicio_delete(Servicio* s, Nodo* n){

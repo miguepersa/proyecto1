@@ -13,10 +13,10 @@ Funciones.o: Funciones.c Servicio.h Parada.h
 Servicio.o: Servicio.c
 	gcc -c $(CFLAGS) $< -o $@
 
-Parada.o: Parada.c Autobus.h Settings.h
+Parada.o: Parada.c Autobus.h
 	gcc -c $(CFLAGS) $< -o $@
 
-Autobus.o: Autobus.c
+Autobus.o: Autobus.c Settings.h
 	gcc -c $(CFLAGS) $< -o $@
 
 

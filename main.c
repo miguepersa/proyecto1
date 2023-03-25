@@ -52,6 +52,7 @@ int main()
     lista_servicio_destroy(ls);*/
 
     /*Aqui debemos colocar la cantidad de paradas que tomamos de los archivos de entrada*/
+    /*4 debe reemplazarse por el numero de paradas*/
     int i;
     int fd_array[4][2];
     int pid;
@@ -63,16 +64,24 @@ int main()
             exit(1);
         }
 
+
         if(pid != 0){
             if (pipe(fd_array[i]) != 0)
             {
                 perror("Error en la creacion del pipe\n");
                 exit(1);
             }
+            int y;
+            close(fd_array[i][1]);
+            read(fd_array[i][0],&y,sizeof(int));
+            close(fd_array[i][0]);
+            printf("Este es un mensaje de mi hijo %d",y);
 
 
         
         }else{
+            write(fd_array[i][1], &i ,sizeof(int));
+            close(fd_array[i][1]);
             break;   
         }
 
@@ -81,6 +90,8 @@ int main()
     /*Parada arreglo_paradas[MAX_PARADAS];
     int numero_paradas = leer_caracterizacion_carga("carga.csv", arreglo_paradas);
     parada_impresion(arreglo_paradas, numero_paradas);*/
+
+    /*Servicio le pasa a Parada nbuses*/
 
     return 0;
 }

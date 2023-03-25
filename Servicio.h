@@ -15,6 +15,7 @@ typedef struct nodo{
 
 typedef struct servicio{
     char codigo[20];
+    int nbuses;
     Nodo *cabeza;
     Nodo *cola;
     struct servicio *siguiente;

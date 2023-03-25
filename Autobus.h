@@ -8,7 +8,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-pthread_mutex_t lock;
+#include "Settings.h"
 
 typedef struct bus{
     
@@ -16,10 +16,11 @@ typedef struct bus{
     int pasajeros;
     float tiempo_recorrido;
     float dt;
+    int pasajeros_por_horario[8];
 }Autobus;
 
 Autobus *autobus_init();
 void autobus_destroy(Autobus*);
-void autobus_runner(void*);
+void* autobus_runner(void*);
 
 #endif
