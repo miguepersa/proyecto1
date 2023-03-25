@@ -1,5 +1,7 @@
 #include "Funciones.h"
 
+extern pthread_mutex_t lock;
+
 void quitar_espacios(char* s) {
     char* d = s;
     do {

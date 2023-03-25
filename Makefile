@@ -4,19 +4,19 @@ CFLAGS = -ansi -Wall -g
 simutransusb: $(OBJ)
 	gcc $(CFLAGS) $^ -o $@
 
-main.o: main.c Funciones.h
+main.o: main.c
 	gcc -c $(CFLAGS) $< -o $@
 
-Funciones.o: Funciones.c Servicio.h Parada.h
+Funciones.o: Funciones.c
 	gcc -c $(CFLAGS) $< -o $@
 
 Servicio.o: Servicio.c
 	gcc -c $(CFLAGS) $< -o $@
 
-Parada.o: Parada.c Autobus.h
+Parada.o: Parada.c 
 	gcc -c $(CFLAGS) $< -o $@
 
-Autobus.o: Autobus.c Settings.h
+Autobus.o: Autobus.c
 	gcc -c $(CFLAGS) $< -o $@
 
 

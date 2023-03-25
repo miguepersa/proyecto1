@@ -1,5 +1,7 @@
 #include "Parada.h"
 
+extern pthread_mutex_t lock;
+
 Parada *parada_init()
 {
     Parada *p = (Parada*) malloc(sizeof(Parada));
