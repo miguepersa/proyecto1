@@ -23,6 +23,6 @@ typedef struct parada
 Parada *parada_init();
 void parada_destroy(Parada*);
 void parada_impresion(Parada *, int);
-void parada_crear_buses(Parada*, pthread_t[]);
+pthread_t* parada_crear_buses(Parada*, Autobus*);
 
 #endif

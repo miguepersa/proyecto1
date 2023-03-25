@@ -186,3 +186,42 @@ void leer_caracterizacion_de_servicio(char* nombre_archivo, Lista_Servicio* ls){
     fclose(archivo);
     lista_servicio_print(ls);
 }
+
+float buscar_hora_inicio(Lista_Servicio* ls){
+
+    int hora_minima = 12;
+    int minuto_minimo = 59;
+    float horario_minimo = -1.0;
+    Servicio servicio_actual = ls->cabeza;
+
+    while(servicio_actual->siguiente != NULL){
+
+        Nodo horario_actual = servicio_actual->cabeza;
+
+        if(horario_actual->hora < hora_minima){
+
+            hora_minima = horario_actual->hora;
+            minuto_minimo = horario_actual->minuto;
+
+        }else if(horario_actual->hora == hora_minima){
+            if(horario_actual->minuto< minuto_minimo){
+                minuto_minimo = horario_actual->minuto;
+            }
+        }
+    }
+
+    if(ls->cola->hora < hora_minima){
+        hora_minima = ls->cola->hora;
+        minuto_minimo = ls->cola->minuto;
+
+    }else if(ls->cola->hora == hora_minima){
+        minuto_minimo = ls->cola->hora->minuto;
+
+    }
+
+    horario_minimo = minuto_minimo/100;
+    horario_minimo = horario_minimo + hora_minima;
+
+    return horario_minimo;
+
+}

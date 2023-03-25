@@ -175,3 +175,41 @@ void lista_servicio_print(Lista_Servicio* ls){
 
 }
 
+int lista_servicio_buscar_nbuses(lista_servicio* ls, char codigo[]){
+    servicio_actual = ls->cabeza;
+
+    while(servicio_actual->siguiente!=NULL){
+
+        if(servicio_actual->codigo == codigo){
+            int nbus = servicio_actual->nbuses;
+            return nbus;
+        }
+        servicio_actual = servicio_actual->siguiente;
+    }
+
+    if(ls->cola->codigo==codigo){
+        int nbus = servicio_actual->nbuses;
+        return nbus;
+    }
+    return -1;
+}
+
+Servicio* lista_servicio_buscar_nbuses(lista_servicio* ls, char codigo[]){
+    servicio_actual = ls->cabeza;
+
+    while(servicio_actual->siguiente!=NULL){
+
+        if(servicio_actual->codigo == codigo){
+           
+            return servicio_actual;
+        }
+        servicio_actual = servicio_actual->siguiente;
+    }
+
+    if(ls->cola->codigo==codigo){
+        
+        return servicio_actual;
+    }
+    return NULL;
+}
+
