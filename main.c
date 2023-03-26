@@ -29,16 +29,16 @@ int tic_toc(){
 }
 
 
-int main()
+int main(int argc, char *argv[])
 {
-   /* int opt;
+    int opt;
     char *a_serv = NULL;
-    char *a_carg = NULL;*/
+    char *a_carg = NULL;
 
     float dtiempo = 0.25;
 
     /* Parsing de argumentos del programa */
-    /*while ((opt = getopt(argc, argv, "s:c:t:")) != -1)
+    while ((opt = getopt(argc, argv, "s:c:t:")) != -1)
     {
         switch (opt)
         {
@@ -51,7 +51,7 @@ int main()
             strcpy(a_carg, optarg);
             break;
         case 't':
-            tiempo = atof(optarg);
+            dtiempo = atof(optarg);
             break;
         default: 
             perror("Uso: ./simutransusb -s <archivo> [-c <archivo>] [-t <num>]");
@@ -65,7 +65,7 @@ int main()
     {
         perror("Debe especificar un archivo de caracterizacion.\nUso: ./simutransusb -s <archivo> [-c <archivo>] [-t <num>]");
         exit(1);
-    }*/
+    }
 
     Lista_Servicio* ls = lista_servicio_init();
     leer_caracterizacion_de_servicio("servicio2007.txt",ls);
@@ -106,7 +106,7 @@ int main()
 
             
             close(fd_array[i][1]);
-            read(fd_array[i][0],&y,sizeof(int));
+            read(fd_array[i][0],&i,sizeof(int));
             close(fd_array[i][0]);
         
         }else{
